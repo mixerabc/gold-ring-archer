@@ -233,7 +233,7 @@ export class Game {
     this.impactPool = new ImpactArrowPool(this.scene, options, 30);
 
     this.aim = { x: 0, y: 0 };
-    this.zoom = 1;
+    this.zoom = state.settings.camera.zoom;
     this.cant = 0;
     this.drawController = new DrawController({
       bowClass: state.bowClass,
@@ -296,6 +296,7 @@ export class Game {
       },
       patchCamera: (patch) => {
         useGameStore.getState().patchCamera(patch);
+        if (patch.zoom !== undefined) this.zoom = patch.zoom;
         this.cameraMachine.setOptions({
           autoReturn: gameState().settings.camera.autoReturn,
           arrowCam: gameState().settings.camera.arrowCam,
@@ -431,6 +432,7 @@ export class Game {
     this.cameraRig.snap();
     this.drawController.reset();
     this.breathing.reset();
+    this.zoom = state.settings.camera.zoom;
     this.pressure.value = 0;
     this.impactPool.clear();
     this.nockedArrow.group.visible = true;
@@ -569,6 +571,7 @@ export class Game {
     this.cameraRig.snap();
     this.drawController.reset();
     this.breathing.reset();
+    this.zoom = state.settings.camera.zoom;
     this.pressure.value = 0;
     this.nockedArrow.group.visible = true;
 
@@ -1078,15 +1081,21 @@ export class Game {
     }
 
     // Pointer look / aim.
-    const mpp = this.distanceM() * 0.00006 * settings.camera.sensitivity;
+    const assistLevel = settings.aimAssist === 'strong' ? 1 : settings.aimAssist === 'light' ? 0.5 : 0;
+    const mpp = (this.distanceM() * 0.00006 * settings.camera.sensitivity) / Math.max(1, this.zoom);
     if (this.cameraMachine.state === 'THIRD_PERSON') {
       if (this.input.pointerLocked) {
         this.orbit.yaw = clamp(this.orbit.yaw - this.input.pointer.dx * 0.0022 * settings.camera.sensitivity, -0.85, 0.85);
         this.orbit.pitch = clamp(this.orbit.pitch - this.input.pointer.dy * 0.0018 * settings.camera.sensitivity * (settings.camera.invertY ? -1 : 1), -0.4, 0.4);
       }
     } else if (this.cameraMachine.isAiming) {
-      this.aim.x = clamp(this.aim.x - this.input.pointer.dx * mpp, -1.6, 1.6);
-      this.aim.y = clamp(this.aim.y - this.input.pointer.dy * mpp * (settings.camera.invertY ? -1 : 1), -1.6, 1.6);
+      // Aim assist: near the gold the sight moves more slowly, which makes fine
+      // corrections possible without pulling the shot away from the wind hold.
+      const radius = Math.hypot(this.aim.x, this.aim.y);
+      const nearGold = clamp(1 - radius / 0.45, 0, 1);
+      const moveScale = 1 - nearGold * assistLevel * 0.55;
+      this.aim.x = clamp(this.aim.x - this.input.pointer.dx * mpp * moveScale, -1.6, 1.6);
+      this.aim.y = clamp(this.aim.y - this.input.pointer.dy * mpp * moveScale * (settings.camera.invertY ? -1 : 1), -1.6, 1.6);
       this.orbit.yaw = clamp(this.orbit.yaw - this.input.pointer.dx * 0.0006, -0.85, 0.85);
     }
 
@@ -1095,7 +1104,7 @@ export class Game {
     if (this.input.isDown('leanRight')) this.cant = clamp(this.cant - dt * 0.22, -0.09, 0.09);
     if (!this.input.isDown('leanLeft') && !this.input.isDown('leanRight')) this.cant *= Math.exp(-dt * 1.2);
     if (this.input.pointer.wheel !== 0 && this.cameraMachine.isAiming) {
-      this.zoom = clamp(this.zoom + this.input.pointer.wheel * 0.15, 1, settings.camera.zoom > 1 ? 4 : 1.6);
+      this.zoom = clamp(this.zoom + this.input.pointer.wheel * 0.25, 1, 6);
     }
 
     this.breathHeld = this.input.isDown('holdBreath');
@@ -1142,6 +1151,7 @@ export class Game {
     }
 
     // Breathing sway and pressure.
+    const tremor = this.drawController.tremor * (1 - assistLevel * 0.5);
     const sway = this.breathing.sample(dt, {
       difficulty: settings.difficulty,
       stability: this.drawController.feel.holdStability,
@@ -1149,9 +1159,10 @@ export class Game {
       pressure: this.pressure.value,
       breathHeld: this.breathHeld,
       stamina: this.drawController.stamina,
-      tremor: this.drawController.tremor,
+      tremor,
     });
-    this.sway = { x: sway.x, y: sway.y };
+    const swayScale = 1 - assistLevel * 0.55;
+    this.sway = { x: sway.x * swayScale, y: sway.y * swayScale };
     this.pressure.update(dt, {
       matchPlay: manager.mode === 'match' || manager.mode === 'tournament',
       margin: manager.match ? manager.match.mySets - manager.match.theirSets : 0,
@@ -1163,7 +1174,7 @@ export class Game {
 
     // Archer and bow.
     this.archer.setDraw(this.drawController.draw, this.input.drawing);
-    this.archer.setAim(0, 0, this.cant, this.drawController.tremor * 0.4);
+    this.archer.setAim(0, 0, this.cant, tremor * 0.4);
     this.archer.update(dt);
     this.bowRecoil = Math.max(0, this.bowRecoil - dt * 4);
     this.bow.update(this.drawController.draw, this.bowRecoil, this.time);
@@ -1232,17 +1243,29 @@ export class Game {
     const speed = launchSpeed(spec, arrowMassGr, cls.bow.efficiency, 1);
     const idealSight = sightMarkMm(speed, this.distanceM());
     const barebow = state.bowClass === 'barebow';
+    const assistLevel = state.settings.aimAssist === 'strong' ? 1 : state.settings.aimAssist === 'light' ? 0.5 : 0;
+    const tremor = this.drawController.tremor * (1 - assistLevel * 0.5);
+
+    // Strong assist also applies a partial wind hold: the arrow is aimed at the
+    // point that would drift into the gold, not at the gold itself. Light assist
+    // only steadies the sight.
+    let aimPoint = { ...this.aim };
+    if (state.settings.aimAssist === 'strong') {
+      const dir = (this.wind.baseDirectionDeg * Math.PI) / 180;
+      const drift = this.distanceM() * 0.0055 * (this.wind.baseSpeed / 3.2) * Math.sin(dir);
+      aimPoint = { x: aimPoint.x * 0.35 - drift * 0.65, y: aimPoint.y * 0.35 };
+    }
 
     const req = {
       bowClass: state.bowClass,
       distanceM: this.distanceM(),
       windSeed: this.wind.seed,
-      aim: { ...this.aim },
+      aim: aimPoint,
       drawFraction: report.drawFraction,
       holdSeconds: report.holdSeconds,
       releaseQuality: report.quality,
       cantRad: this.cant,
-      torqueRad: (Math.random() - 0.5) * 0.012 * (1 + this.drawController.tremor),
+      torqueRad: (Math.random() - 0.5) * 0.012 * (1 + tremor),
       // Barebow has no sight: the archer aims by string picture and gap, so
       // there is no sight mark to be off. Sighted bows compare the fitted mark
       // with the ideal mark for this distance.
@@ -1394,7 +1417,7 @@ export class Game {
     this.shot = null;
     this.drawController.reset();
     this.breathing.reset();
-    this.zoom = 1;
+    this.zoom = gameState().settings.camera.zoom;
     this.cant = 0;
     this.nockedArrow.group.visible = true;
     this.flightArrow.group.visible = false;
@@ -1429,7 +1452,7 @@ export class Game {
         mirror: state.settings.handedness === 'right' ? 1 : -1,
         breath: 0.5,
         pressure: this.pressure.value,
-        tremor: this.drawController?.tremor ?? 0,
+        tremor: (this.drawController?.tremor ?? 0) * (1 - (gameState().settings.aimAssist === 'strong' ? 0.5 : gameState().settings.aimAssist === 'light' ? 0.25 : 0)),
         time: this.time,
         recoil: this.bowRecoil,
         arrow: arrowPos && this.shot ? { position: arrowPos, velocity: this.arrowVelocity, landed: this.shot.landed } : undefined,

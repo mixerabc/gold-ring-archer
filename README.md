@@ -49,6 +49,8 @@ npm run start        # Fastify server
 | Draw the bow | Hold **right mouse button** (or right trigger) |
 | Release | Let go of the draw button, or press **F** / **Space** |
 | Aim | Move the mouse while drawing |
+| Aim zoom | Mouse wheel (1x–6x; default 3.5x) |
+| Aim assist | Settings → Camera → Off / Light / Strong |
 | Hold breath | **Shift** |
 | Cant the bow | **Q** / **E** |
 | Sight / scope zoom | **Mouse wheel** |
@@ -75,6 +77,8 @@ Touch: drag to draw and aim, release to shoot. Gamepad: right trigger draws, A /
 
 - **Camera state machine** with `THIRD_PERSON → DRAWING_TRANSITION → FIRST_PERSON_AIM → RELEASE →
   ARROW_CAM / THIRD_PERSON` and spectator views. Transitions are unit tested.
+- **Accessible aiming**: default 3.5x sight zoom (wheel up to 6x), plus Off/Light/Strong aim assist.
+  Light steadies the sight and slows it near the gold; Strong also applies a partial automatic wind hold.
 - **Three divisions** with distinct draw curves, let-off, holding weight, sight picture, speed and
   equipment limits (barebow has no sight, no stabiliser, no clicker).
 - **Deterministic physics**: bow energy model, 240 Hz arrow integration with drag, wind, spin drift and

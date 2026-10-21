@@ -135,6 +135,11 @@ export class Menus {
       this.show('settings');
       return;
     }
+    if (action.startsWith('assist:')) {
+      this.actions.patchSettings({ aimAssist: action.slice(7) as Settings['aimAssist'] });
+      this.show('settings');
+      return;
+    }
     if (action.startsWith('handedness:')) {
       const handedness = action.slice(11) as Settings['handedness'];
       this.actions.patchSettings({ handedness });
@@ -232,6 +237,11 @@ export class Menus {
       this.actions.patchCamera({ sensitivity: value / 100 });
       const output = input.parentElement?.querySelector('output');
       if (output) output.textContent = `${value}%`;
+    }
+    if (input.dataset.setting === 'aimzoom') {
+      this.actions.patchCamera({ zoom: value / 100 });
+      const output = input.parentElement?.querySelector('output');
+      if (output) output.textContent = `${(value / 100).toFixed(1)}x`;
     }
   }
 
@@ -561,6 +571,21 @@ export class Menus {
           ${toggle('autoReturn', 'Auto return to third person', s.camera.autoReturn, 'camera')}
           ${toggle('arrowCam', 'Follow the arrow', s.camera.arrowCam, 'camera')}
           ${toggle('invertY', 'Invert look Y', s.camera.invertY, 'camera')}
+          <div class="settings-row">
+            <label>Aim assist</label>
+            <div style="display:flex;gap:6px">
+              ${(['off', 'light', 'strong'] as const)
+                .map((a) => `<button class="btn btn--sm${s.aimAssist === a ? ' btn--primary' : ''}" data-action="assist:${a}">${a}</button>`)
+                .join('')}
+            </div>
+          </div>
+          <div class="settings-row">
+            <label>Aim zoom</label>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="range" min="100" max="600" step="10" value="${Math.round(s.camera.zoom * 100)}" data-setting="aimzoom" />
+              <output>${s.camera.zoom.toFixed(1)}x</output>
+            </div>
+          </div>
           <div class="settings-row">
             <label>Look sensitivity</label>
             <div style="display:flex;align-items:center;gap:8px">

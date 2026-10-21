@@ -57,6 +57,8 @@ export interface CameraSettings {
 export interface Settings {
   difficulty: Difficulty;
   quality: QualityPreset;
+  /** How much the sight is stabilised and slowed near the gold. */
+  aimAssist: 'off' | 'light' | 'strong';
   camera: CameraSettings;
   handedness: Handedness;
   reducedMotion: boolean;
@@ -123,7 +125,7 @@ export interface GameStore {
   resetSession: (patch?: Partial<SessionSummary>) => void;
 }
 
-const SETTINGS_KEY = 'gold-ring:settings:v1';
+const SETTINGS_KEY = 'gold-ring:settings:v3';
 const GEAR_KEY = 'gold-ring:gear:v2';
 
 export const defaultCameraSettings: CameraSettings = {
@@ -134,12 +136,13 @@ export const defaultCameraSettings: CameraSettings = {
   fov: 62,
   sensitivity: 1,
   invertY: false,
-  zoom: 1,
+  zoom: 3.5,
 };
 
 export const defaultSettings: Settings = {
   difficulty: 'standard',
   quality: 'high',
+  aimAssist: 'light',
   camera: { ...defaultCameraSettings },
   handedness: 'right',
   reducedMotion: false,
