@@ -1,0 +1,28 @@
+{
+  "name": "@gold-ring/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fastify + WebSocket backend for GOLD RING: leaderboards, daily seeds, equipment, matchmaking and server-authoritative shot validation.",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.3.1",
+    "@fastify/helmet": "^13.2.0",
+    "@fastify/rate-limit": "^11.2.1",
+    "@gold-ring/shared": "*",
+    "fastify": "^5.12.7",
+    "pino": "^10.4.0",
+    "pino-pretty": "^13.2.0",
+    "tsx": "^4.23.15",
+    "ws": "^8.22.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/ws": "^8.18.2",
+    "typescript": "~5.9.3"
+  }
+}

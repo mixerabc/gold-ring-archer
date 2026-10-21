@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "note": "All brands and product names here are FICTIONAL and trademark-safe. They exist so the game can show plausible, differently-feeling equipment. No real manufacturer is represented or endorsed. See ASSETS.md for third-party asset licensing.",
+    "brands": {
+      "Aurelian": { "fictional": true, "description": "Italian-style riser house: forged aluminium, deep anodised colours." },
+      "Northwind": { "fictional": true, "description": "Scandinavian limb maker: foam/carbon laminations, smooth draw." },
+      "Meridian": { "fictional": true, "description": "Sight and scope specialist: fine clicks, bright fibre optics." },
+      "Kestrel": { "fictional": true, "description": "Stabiliser systems: carbon rods, tunable dampers." },
+      "Ironwood": { "fictional": true, "description": "Compound bows: hybrid cams, machined risers." },
+      "Talon": { "fictional": true, "description": "Release aids: thumb and back-tension triggers." },
+      "Fletchworks": { "fictional": true, "description": "Arrow shafts and fletching." },
+      "Cordis": { "fictional": true, "description": "Strings, servings and tabs." }
+    }
+  },
+  "risers": [
+    {
+      "id": "riser-aurelian-forge-25",
+      "brand": "Aurelian",
+      "name": "Forge 25",
+      "lengthIn": 25,
+      "massGr": 1280,
+      "material": "forged 6061 aluminium",
+      "color": "#1d2a36",
+      "accent": "#c9a227",
+      "geometry": { "limbPocket": 0.42, "gripDepth": 0.055, "windowDepth": 0.09 }
+    },
+    {
+      "id": "riser-aurelian-aria-23",
+      "brand": "Aurelian",
+      "name": "Aria 23",
+      "lengthIn": 23,
+      "massGr": 1150,
+      "material": "machined 7075 aluminium",
+      "color": "#7a1f2b",
+      "accent": "#e8e2d4",
+      "geometry": { "limbPocket": 0.4, "gripDepth": 0.05, "windowDepth": 0.085 }
+    },
+    {
+      "id": "riser-ironwood-apex",
+      "brand": "Ironwood",
+      "name": "Apex 33",
+      "lengthIn": 33,
+      "massGr": 2100,
+      "material": "machined aluminium, carbon skins",
+      "color": "#23262b",
+      "accent": "#4a90a4",
+      "geometry": { "limbPocket": 0.5, "gripDepth": 0.06, "windowDepth": 0.1 }
+    }
+  ],
+  "limbs": [
+    {
+      "id": "limb-northwind-zephyr",
+      "brand": "Northwind",
+      "name": "Zephyr Carbon",
+      "length": "medium",
+      "drawWeightsLb": [32, 36, 40, 44, 48],
+      "material": "foam core, carbon laminate",
+      "color": "#20242a"
+    },
+    {
+      "id": "limb-northwind-boreal",
+      "brand": "Northwind",
+      "name": "Boreal Wood",
+      "length": "long",
+      "drawWeightsLb": [30, 34, 38, 42],
+      "material": "maple and carbon",
+      "color": "#6b4a2f"
+    },
+    {
+      "id": "limb-ironwood-torque",
+      "brand": "Ironwood",
+      "name": "Torque Split",
+      "length": "short",
+      "drawWeightsLb": [45, 50, 55, 60],
+      "material": "solid carbon billet",
+      "color": "#15171a"
+    }
+  ],
+  "sights": [
+    {
+      "id": "sight-meridian-pin",
+      "brand": "Meridian",
+      "name": "Pinpoint 9",
+      "type": "pin",
+      "extensionIn": 3,
+      "apertureMm": 8,
+      "magnification": 0,
+      "clicksPerRevolution": 40,
+      "elevationRangeMm": 70,
+      "windageRangeMm": 25
+    },
+    {
+      "id": "sight-meridian-scope-4",
+      "brand": "Meridian",
+      "name": "Lucid 4x",
+      "type": "scope",
+      "extensionIn": 4,
+      "apertureMm": 29,
+      "magnification": 4,
+      "clicksPerRevolution": 32,
+      "elevationRangeMm": 80,
+      "windageRangeMm": 30
+    },
+    {
+      "id": "sight-meridian-scope-6",
+      "brand": "Meridian",
+      "name": "Lucid 6x",
+      "type": "scope",
+      "extensionIn": 5,
+      "apertureMm": 25,
+      "magnification": 6,
+      "clicksPerRevolution": 32,
+      "elevationRangeMm": 80,
+      "windageRangeMm": 30
+    }
+  ],
+  "stabilisers": [
+    {
+      "id": "stab-kestrel-long-30",
+      "brand": "Kestrel",
+      "name": "Longline 30",
+      "longRodIn": 30,
+      "sideRodIn": 12,
+      "weightsOz": 8
+    },
+    {
+      "id": "stab-kestrel-long-33",
+      "brand": "Kestrel",
+      "name": "Longline 33",
+      "longRodIn": 33,
+      "sideRodIn": 12,
+      "weightsOz": 10
+    }
+  ],
+  "releases": [
+    {
+      "id": "release-talon-thumb",
+      "brand": "Talon",
+      "name": "Thumb Pro",
+      "type": "thumb",
+      "sensitivity": 1.2
+    },
+    {
+      "id": "release-talon-back",
+      "brand": "Talon",
+      "name": "Backtension X",
+      "type": "backTension",
+      "sensitivity": 0.7
+    },
+    {
+      "id": "release-talon-wrist",
+      "brand": "Talon",
+      "name": "Wriststrap",
+      "type": "wrist",
+      "sensitivity": 1.4
+    }
+  ],
+  "rests": [
+    { "id": "rest-meridian-magnetic", "brand": "Meridian", "name": "Mag Rest", "type": "magnetic" },
+    { "id": "rest-meridian-dropaway", "brand": "Meridian", "name": "Drop Blade", "type": "dropAway" }
+  ],
+  "arrows": [
+    {
+      "id": "arrow-fletchworks-carbon-500",
+      "brand": "Fletchworks",
+      "name": "Carbon 500",
+      "spine": 500,
+      "lengthIn": 29,
+      "weightGr": 315,
+      "pointWeightGr": 100,
+      "diameterMm": 5.5,
+      "fletching": "vane",
+      "fletchingLengthIn": 1.75,
+      "colors": { "shaft": "#2b2f36", "fletching": "#e8443a", "nock": "#f5c518" },
+      "recommendedDrawWeightLb": { "min": 38, "max": 48 }
+    },
+    {
+      "id": "arrow-fletchworks-carbon-600",
+      "brand": "Fletchworks",
+      "name": "Carbon 600",
+      "spine": 600,
+      "lengthIn": 28.5,
+      "weightGr": 285,
+      "pointWeightGr": 90,
+      "diameterMm": 5.2,
+      "fletching": "vane",
+      "fletchingLengthIn": 1.5,
+      "colors": { "shaft": "#3a3f47", "fletching": "#2f8fdf", "nock": "#f4f1e8" },
+      "recommendedDrawWeightLb": { "min": 30, "max": 40 }
+    },
+    {
+      "id": "arrow-fletchworks-ace-380",
+      "brand": "Fletchworks",
+      "name": "Ace 380",
+      "spine": 380,
+      "lengthIn": 28,
+      "weightGr": 355,
+      "pointWeightGr": 120,
+      "diameterMm": 5.6,
+      "fletching": "vane",
+      "fletchingLengthIn": 1.75,
+      "colors": { "shaft": "#101215", "fletching": "#f5c518", "nock": "#e8443a" },
+      "recommendedDrawWeightLb": { "min": 50, "max": 60 }
+    },
+    {
+      "id": "arrow-fletchworks-feather-450",
+      "brand": "Fletchworks",
+      "name": "Feather 450",
+      "spine": 450,
+      "lengthIn": 29,
+      "weightGr": 330,
+      "pointWeightGr": 100,
+      "diameterMm": 5.4,
+      "fletching": "feather",
+      "fletchingLengthIn": 2,
+      "colors": { "shaft": "#5a3b25", "fletching": "#f4f1e8", "nock": "#d21f2b" },
+      "recommendedDrawWeightLb": { "min": 34, "max": 44 }
+    }
+  ],
+  "strings": [
+    { "id": "string-cordis-fast", "brand": "Cordis", "name": "Fastflite 18", "strands": 18, "material": "Dyneema blend" },
+    { "id": "string-cordis-smooth", "brand": "Cordis", "name": "Smooth 16", "strands": 16, "material": "Dyneema blend" }
+  ],
+  "tabs": [
+    { "id": "tab-cordis-calfhair", "brand": "Cordis", "name": "Calfhair Tab", "type": "fingerTab" },
+    { "id": "tab-cordis-cordovan", "brand": "Cordis", "name": "Cordovan Tab", "type": "fingerTab" },
+    { "id": "tab-cordis-glove", "brand": "Cordis", "name": "Shooting Glove", "type": "glove" }
+  ]
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.npm-cache/
+.env
+*.log
+.DS_Store
+coverage/
+tmp/
+.tmp/
+/data/
+.workbuddy-ai/
+.vercel/
+.netlify/
+*.log.err

@@ -1,0 +1,349 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "game": "GOLD RING",
+    "rulebook": {
+      "title": "World Archery Rulebook",
+      "books": [
+        "Book 3 — Target Archery",
+        "Book 4 — Competition formats and event procedures (numbering referenced by the brief; confirm against the current rulebook)"
+      ],
+      "edition": "UNVERIFIED — values transcribed from the brief and general World Archery practice",
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedOn": null,
+      "citation": "GOLD RING rules engine, shared/src/rules/worldArchery.json, schemaVersion 1"
+    },
+    "warning": "MAINTAINER ACTION REQUIRED: no value in this file has been checked against an official World Archery rulebook. Before shipping a competitive build, verify every number against the current Book 3 (Target Archery) and the current competition-format book, record the edition in meta.rulebook.edition, set meta.rulebook.verified to true, and sign it with verifiedBy/verifiedOn. The rules engine refuses to advertise a 'verified' ruleset until that flag is set, and the UI shows an 'unofficial values' badge while it is false.",
+    "_provenance": "Values marked with a '_verify' key are the ones most likely to change between rulebook editions."
+  },
+  "units": {
+    "distance": "metres",
+    "faceSize": "centimetres",
+    "drawWeight": "pounds (lb)",
+    "bowLength": "inches",
+    "arrowMass": "grains",
+    "angle": "radians (physics) / degrees (configuration)",
+    "time": "seconds"
+  },
+  "fieldOfPlay": {
+    "laneWidthM": 2.5,
+    "minLaneWidthM": 0.8,
+    "waitingLineM": 5,
+    "shootingLineWidthM": 0.05,
+    "targetCentreHeightM": 1.3,
+    "faceTiltDeg": 15,
+    "distanceMarkerOffsetM": 3,
+    "mediaZoneDepthM": 4,
+    "officialsZoneDepthM": 2,
+    "windFlagPositionsM": [10, 25, 40, 55, 65],
+    "_verify": "laneWidthM/minLaneWidthM follow the brief (80 cm minimum). The 122 cm face needs roughly 2.5 m of lateral room per lane at 70 m; confirm the organiser's layout standard before changing.",
+    "_provenance": "Book 3, field of play chapters; organiser layout guidance"
+  },
+  "faces": {
+    "wa122": {
+      "id": "wa122",
+      "label": "122 cm face (10 rings)",
+      "diameterCm": 122,
+      "rings": 10,
+      "ringWidthCm": 6.1,
+      "minScoringRing": 1,
+      "xRingDiameterCm": 6.1,
+      "colors": [
+        { "rings": [1, 2], "name": "white", "hex": "#f4f1e8" },
+        { "rings": [3, 4], "name": "black", "hex": "#1b1b1b" },
+        { "rings": [5, 6], "name": "blue", "hex": "#1f6fbf" },
+        { "rings": [7, 8], "name": "red", "hex": "#d21f2b" },
+        { "rings": [9, 10], "name": "gold", "hex": "#f5c518" }
+      ],
+      "_verify": "Ring width 6.1 cm and X-ring 6.1 cm diameter are the standard 122 cm face geometry; confirm printing tolerances in Book 3."
+    },
+    "wa80": {
+      "id": "wa80",
+      "label": "80 cm face (rings 5-10)",
+      "diameterCm": 80,
+      "rings": 10,
+      "ringWidthCm": 4,
+      "minScoringRing": 5,
+      "xRingDiameterCm": 4,
+      "colors": [
+        { "rings": [5, 6], "name": "blue", "hex": "#1f6fbf" },
+        { "rings": [7, 8], "name": "red", "hex": "#d21f2b" },
+        { "rings": [9, 10], "name": "gold", "hex": "#f5c518" }
+      ],
+      "_verify": "Compound uses the 80 cm 6-ring face at 50 m. Rings 1-4 are not printed; an arrow outside the 5 ring is a miss on that face."
+    },
+    "wa40": {
+      "id": "wa40",
+      "label": "40 cm face (10 rings)",
+      "diameterCm": 40,
+      "rings": 10,
+      "ringWidthCm": 2,
+      "minScoringRing": 1,
+      "xRingDiameterCm": 2,
+      "colors": [
+        { "rings": [1, 2], "name": "white", "hex": "#f4f1e8" },
+        { "rings": [3, 4], "name": "black", "hex": "#1b1b1b" },
+        { "rings": [5, 6], "name": "blue", "hex": "#1f6fbf" },
+        { "rings": [7, 8], "name": "red", "hex": "#d21f2b" },
+        { "rings": [9, 10], "name": "gold", "hex": "#f5c518" }
+      ]
+    },
+    "wa40_6": {
+      "id": "wa40_6",
+      "label": "40 cm 6-ring triple spot",
+      "diameterCm": 40,
+      "rings": 10,
+      "ringWidthCm": 2,
+      "minScoringRing": 5,
+      "xRingDiameterCm": 2,
+      "tripleSpot": true,
+      "colors": [
+        { "rings": [5, 6], "name": "blue", "hex": "#1f6fbf" },
+        { "rings": [7, 8], "name": "red", "hex": "#d21f2b" },
+        { "rings": [9, 10], "name": "gold", "hex": "#f5c518" }
+      ],
+      "_verify": "Indoor compound triple spot: three 40 cm 6-ring faces stacked vertically. Confirm the accepted configuration for the event entered."
+    }
+  },
+  "classes": {
+    "recurve": {
+      "id": "recurve",
+      "name": "Recurve (Olympic)",
+      "shortName": "Recurve",
+      "distanceM": 70,
+      "face": "wa122",
+      "arrowsPerEnd": 6,
+      "ends": 12,
+      "totalArrows": 72,
+      "bow": {
+        "drawWeightLb": { "min": 30, "max": 50, "default": 44 },
+        "bowLengthIn": { "min": 66, "max": 72, "default": 70 },
+        "drawLengthIn": { "min": 26, "max": 31, "default": 29 },
+        "braceHeightIn": { "min": 7, "max": 9.5, "default": 8.75 },
+        "efficiency": 0.8,
+        "letOff": 0,
+        "stabiliser": { "longRodIn": 30, "sideRodIn": 12 }
+      },
+      "arrowSpeedMps": { "min": 58, "max": 70 },
+      "limits": {
+        "sight": true,
+        "stabiliser": true,
+        "clicker": true,
+        "releaseAid": false,
+        "peep": false,
+        "scopeMagnification": 0,
+        "barebowGapAim": false
+      },
+      "matchStyle": "setSystem",
+      "description": "70 m, 122 cm face. Linear draw force curve, clicker, pin sight and long rod. Finger release.",
+      "_verify": "70 m / 122 cm is the Olympic recurve outdoor round. Draw weight and speed ranges are equipment-realistic ranges, not rulebook values."
+    },
+    "compound": {
+      "id": "compound",
+      "name": "Compound",
+      "shortName": "Compound",
+      "distanceM": 50,
+      "face": "wa80",
+      "arrowsPerEnd": 3,
+      "ends": 5,
+      "totalArrows": 15,
+      "bow": {
+        "drawWeightLb": { "min": 40, "max": 60, "default": 55 },
+        "bowLengthIn": { "min": 32, "max": 34, "default": 33 },
+        "drawLengthIn": { "min": 26, "max": 30, "default": 28.5 },
+        "braceHeightIn": { "min": 6, "max": 8, "default": 7 },
+        "efficiency": 0.88,
+        "letOff": 0.8,
+        "peakDrawIn": 21,
+        "stabiliser": { "longRodIn": 30, "sideRodIn": 12 }
+      },
+      "arrowSpeedMps": { "min": 88, "max": 100 },
+      "limits": {
+        "sight": true,
+        "stabiliser": true,
+        "clicker": false,
+        "releaseAid": true,
+        "peep": true,
+        "scopeMagnification": 6,
+        "barebowGapAim": false
+      },
+      "matchStyle": "cumulative",
+      "description": "50 m, 80 cm 6-ring face. Cam-shaped force curve with 80% let-off, peep + scope, mechanical release aid, very fast arrows.",
+      "_verify": "50 m / 80 cm face is the standard compound outdoor round. Let-off 75-85% is equipment-realistic and must remain inside the division's equipment rules."
+    },
+    "barebow": {
+      "id": "barebow",
+      "name": "Barebow",
+      "shortName": "Barebow",
+      "distanceM": 50,
+      "face": "wa122",
+      "arrowsPerEnd": 6,
+      "ends": 12,
+      "totalArrows": 72,
+      "bow": {
+        "drawWeightLb": { "min": 30, "max": 45, "default": 38 },
+        "bowLengthIn": { "min": 66, "max": 70, "default": 68 },
+        "drawLengthIn": { "min": 26, "max": 31, "default": 29 },
+        "braceHeightIn": { "min": 7, "max": 9.5, "default": 8.5 },
+        "efficiency": 0.78,
+        "letOff": 0
+      },
+      "arrowSpeedMps": { "min": 54, "max": 66 },
+      "limits": {
+        "sight": false,
+        "stabiliser": false,
+        "clicker": false,
+        "releaseAid": false,
+        "peep": false,
+        "scopeMagnification": 0,
+        "barebowGapAim": true
+      },
+      "matchStyle": "setSystem",
+      "description": "50 m, 122 cm face. No sight and no stabiliser: string picture, anchor and gap aiming only.",
+      "_verify": "Barebow distance and face are the brief's defaults; some federations run 50 m on the 122 cm face for the barebow division. Confirm the division rules for the event entered."
+    }
+  },
+  "formats": {
+    "rankingRound": {
+      "id": "rankingRound",
+      "name": "72-arrow ranking round",
+      "description": "12 ends of 6 arrows at the division distance. Cumulative score seeds the elimination bracket; X count breaks ties.",
+      "scoringStyle": "cumulative",
+      "ends": 12,
+      "arrowsPerEnd": 6,
+      "maxArrows": 72
+    },
+    "recurveMatch": {
+      "id": "recurveMatch",
+      "name": "Recurve individual match (set system)",
+      "description": "Up to 5 sets of 3 arrows. 2 set points for a set win, 1 for a draw, 0 for a loss. First to 6 set points wins; 5-5 goes to a single-arrow shoot-off.",
+      "scoringStyle": "setSystem",
+      "ends": 5,
+      "arrowsPerEnd": 3,
+      "setPointsToWin": 6,
+      "setPointsDraw": 1,
+      "tieBreak": "singleArrowShootOff",
+      "maxArrows": 15
+    },
+    "compoundMatch": {
+      "id": "compoundMatch",
+      "name": "Compound individual match (cumulative)",
+      "description": "15 arrows in 5 ends of 3, cumulative score. Ties go to a single-arrow shoot-off.",
+      "scoringStyle": "cumulative",
+      "ends": 5,
+      "arrowsPerEnd": 3,
+      "tieBreak": "singleArrowShootOff",
+      "maxArrows": 15
+    },
+    "barebowMatch": {
+      "id": "barebowMatch",
+      "name": "Barebow individual match",
+      "description": "Barebow matches use the configured scoring style (set system by default, cumulative optional).",
+      "scoringStyle": "setSystem",
+      "ends": 5,
+      "arrowsPerEnd": 3,
+      "setPointsToWin": 6,
+      "setPointsDraw": 1,
+      "tieBreak": "singleArrowShootOff",
+      "maxArrows": 15
+    },
+    "indoor18": {
+      "id": "indoor18",
+      "name": "18 m indoor round",
+      "description": "60 arrows, 20 ends of 3, 40 cm face (triple spot optional for compound).",
+      "scoringStyle": "cumulative",
+      "ends": 20,
+      "arrowsPerEnd": 3,
+      "maxArrows": 60
+    },
+    "practice": {
+      "id": "practice",
+      "name": "Practice",
+      "description": "Free shooting at any configured distance. No time limit, no penalties; optional training overlays.",
+      "scoringStyle": "cumulative",
+      "ends": 0,
+      "arrowsPerEnd": 0,
+      "maxArrows": 0
+    }
+  },
+  "teamFormats": {
+    "team": {
+      "id": "team",
+      "name": "Team (3 archers)",
+      "archersPerTeam": 3,
+      "ends": 4,
+      "arrowsPerEnd": 6,
+      "endSeconds": 120,
+      "alternateShooting": true,
+      "description": "3 archers, 2 arrows each per end, 4 ends. Optional later stage."
+    },
+    "mixedTeam": {
+      "id": "mixedTeam",
+      "name": "Mixed team (1 man + 1 woman)",
+      "archersPerTeam": 2,
+      "ends": 4,
+      "arrowsPerEnd": 4,
+      "endSeconds": 80,
+      "alternateShooting": true,
+      "description": "2 archers, 2 arrows each per end, 4 ends. Optional later stage."
+    }
+  },
+  "timing": {
+    "rankingEndSeconds": 240,
+    "rankingWarningSeconds": 30,
+    "matchArrowSeconds": 20,
+    "matchWarningSeconds": 10,
+    "matchEndSeconds": 60,
+    "teamEndSeconds": 120,
+    "mixedTeamEndSeconds": 80,
+    "shootOffArrowSeconds": 20,
+    "practiceEndSeconds": 0,
+    "_verify": "4 minutes for 6 arrows (ranking) and 20 seconds per arrow (match play) follow the brief. The yellow warning is 30 s in ranking and 10 s in match play; confirm both against the current rulebook and the event's local rules."
+  },
+  "signals": {
+    "phases": [
+      { "id": "prepare", "light": "red", "label": "Do not shoot" },
+      { "id": "shoot", "light": "green", "label": "Shoot" },
+      { "id": "warning", "light": "yellow", "label": "Last seconds" },
+      { "id": "expired", "light": "red", "label": "Time expired" }
+    ],
+    "buzzer": {
+      "start": "two short buzzes when the green light appears",
+      "warning": "one short buzz at the yellow light",
+      "end": "one long buzz when time expires"
+    },
+    "_verify": "Signal colours and buzzer pattern follow the brief (red/green/yellow with buzzer). Confirm the exact sound and light sequence for the event."
+  },
+  "penalties": {
+    "earlyRelease": "An arrow shot before the signal is not counted; the highest scoring arrow of that end is cancelled.",
+    "lateRelease": "An arrow shot after the signal has expired is not counted; the highest scoring arrow of that end is cancelled.",
+    "cancelHighestArrowOfEnd": true,
+    "description": "Where the local rules differ, change these strings and the cancelHighestArrowOfEnd flag: the rules engine reads them at runtime.",
+    "_verify": "Penalty wording and the 'cancel the highest arrow' remedy follow the brief; confirm against Book 3 (shooting procedure / penalties)."
+  },
+  "scoring": {
+    "lineCutter": "outerEdgeOfShaft",
+    "xCountsAsTen": true,
+    "xRingTieBreak": true,
+    "tieBreakers": ["xCount", "tenCount", "closestToCentreShootOff"],
+    "robinHood": "An arrow embedded in another arrow's nock (Robin Hood) is scored by the arrow it struck, and both arrows count as shot; a broken shaft is withdrawn.",
+    "passThrough": "An arrow that passes through the face is re-shot if it left a mark that cannot be scored, subject to the judge's decision.",
+    "bounceBack": "An arrow that rebounds from the face is re-shot, subject to the judge's decision.",
+    "judgeReviewRadiusMm": 12,
+    "defaultShaftDiameterMm": 5.5,
+    "_verify": "Line cutting is judged on the outer edge of the shaft; the automatic scorer uses defaultShaftDiameterMm. judgeReviewRadiusMm is a game-design tolerance for close calls, not a rulebook value."
+  },
+  "procedures": {
+    "orderOfShooting": "alternating",
+    "shootOffClosestToCentre": true,
+    "shootOffTieRepeat": true,
+    "walkToTargetAfterEnd": true,
+    "electronicScoringAfterEachEnd": true,
+    "judgeCallOut": true,
+    "practiceEndsBeforeRanking": 2,
+    "warmUpMinutes": 20,
+    "dressCodeCosmetic": true,
+    "_verify": "Alternating order and the walk-to-the-target procedure are the standard outdoor flow. Confirm timing and practice-end counts for the specific event."
+  }
+}

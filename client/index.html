@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#0b0d10" />
+    <title>GOLD RING — World Archery style target archery</title>
+    <meta
+      name="description"
+      content="GOLD RING is an unofficial, educational browser-based target archery simulation with recurve, compound and barebow divisions."
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="stage" aria-label="3D archery range"></div>
+
+      <div id="boot" class="boot">
+        <div class="boot__mark" aria-hidden="true">
+          <span class="boot__ring boot__ring--1"></span>
+          <span class="boot__ring boot__ring--2"></span>
+          <span class="boot__ring boot__ring--3"></span>
+          <span class="boot__dot"></span>
+        </div>
+        <h1 class="boot__title">GOLD RING</h1>
+        <p class="boot__sub">World Archery style target archery</p>
+        <div class="boot__bar"><i id="boot-fill"></i></div>
+        <p id="boot-status" class="boot__status">Preparing the range…</p>
+        <p class="boot__legal">
+          Unofficial fan / educational simulation. Not affiliated with World Archery or the IOC.
+        </p>
+      </div>
+
+      <div id="ui" class="ui" aria-live="polite"></div>
+      <div id="toasts" class="toasts"></div>
+
+      <div id="webgl-error" class="fatal" hidden>
+        <h2>WebGL 2 is unavailable</h2>
+        <p>
+          GOLD RING needs WebGL 2 (or WebGPU). Enable hardware acceleration in your browser settings and reload.
+        </p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

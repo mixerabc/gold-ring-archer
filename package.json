@@ -1,0 +1,33 @@
+{
+  "name": "gold-ring",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "GOLD RING - a browser-based, World Archery style target archery simulation (unofficial, educational).",
+  "license": "MIT",
+  "workspaces": [
+    "shared",
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "build": "npm run build -w client",
+    "preview": "npm run preview -w client",
+    "start": "npm run start -w server",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p shared/tsconfig.json && tsc --noEmit -p client/tsconfig.json && tsc --noEmit -p server/tsconfig.json",
+    "range-test": "node --import tsx scripts/range-test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.7"
+  },
+  "engines": {
+    "node": ">=20.11"
+  }
+}
