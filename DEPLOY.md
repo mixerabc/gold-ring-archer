@@ -4,7 +4,7 @@ The project has two deployable pieces:
 
 | Piece | What it is | Where it can run |
 | --- | --- | --- |
-| **Client** | Static Vite build (`dist/client`) | Netlify, Vercel, Cloudflare Pages, any static host |
+| **Client** | Static Vite build (`client/dist`) | Netlify, Vercel, Cloudflare Pages, any static host |
 | **Server** | Fastify REST + WebSocket, authoritative shots | Render, Fly.io, Railway, a VPS, Docker |
 
 Netlify and Vercel host the **client only**. Their static hosting cannot run the Fastify/WebSocket server. Deploy the server first, then point the client at it.
@@ -91,7 +91,7 @@ Note the URL. It becomes `VITE_API_URL` for the client.
 1. Netlify → **Add new site** → **Import an existing project** → GitHub → select the repo.
 2. Netlify reads `netlify.toml`:
    - build command: `npm run build`
-   - publish directory: `dist/client`
+   - publish directory: `client/dist`
    - Node 22
 3. Add environment variables (Site configuration → Environment variables):
    ```
@@ -111,17 +111,25 @@ Then add the Netlify URL to the server's `CORS_ORIGIN` and redeploy the server.
 
 ## 4. Deploy the client to Vercel
 
-1. Vercel → **Add New** → **Project** → import the GitHub repo.
-2. Vercel reads `vercel.json`:
-   - install: `npm install`
-   - build: `npm run build`
-   - output: `dist/client`
-   - framework: none
-3. Add the same environment variables:
+Vercel's import screen detects two apps (`client` and `server`). Import **only the client**:
+
+1. Vercel → **Add New** → **Project** → import the repo.
+2. On the “multiple applications detected” screen, click **Import single project** next to **`client`**.
+3. Configure:
+   - Root Directory: `client`
+   - Framework Preset: **Vite**
+   - Install Command: `npm install`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+4. Add the environment variable:
    ```
    VITE_API_URL = https://your-server.onrender.com
    ```
-4. Deploy.
+5. Deploy.
+
+`client/vercel.json` contains the same settings. The client build reads `../shared/src` through a Vite alias; Vercel clones the whole repository, so the shared source is available even though the root is `client`.
+
+If you instead import the **repository root**, use the root `vercel.json` (output `client/dist`) and set Framework Preset to **Other**. The single-client import is the more reliable path in Vercel's new monorepo UI.
 
 Again, add the Vercel URL to `CORS_ORIGIN` on the server.
 
@@ -164,7 +172,7 @@ No proxy is needed in production. In local development, `npm run dev` proxies `/
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Blank page, 404 on `/assets/...` | publish directory wrong | Netlify: `dist/client`; Vercel: output `dist/client` |
+| Blank page, 404 on `/assets/...` | publish directory wrong | Netlify: `client/dist`; Vercel client project: `dist`; Vercel root project: `client/dist` |
 | `WebGL 2 is unavailable` | browser/hardware | enable hardware acceleration; try Chrome/Edge |
 | Leaderboard says server offline | `VITE_API_URL` missing or wrong | set it and redeploy the client |
 | `blocked by CORS` | server `CORS_ORIGIN` missing the client origin | add the exact origin (scheme + host), redeploy server |

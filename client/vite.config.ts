@@ -26,7 +26,7 @@ export default defineConfig({
   },
   build: {
     target: 'es2022',
-    outDir: '../dist/client',
+    outDir: 'dist',
     // The build script cleans dist/client itself; Vite's emptyDir hook is
     // skipped so builds also work in sandboxed/CI environments.
     emptyOutDir: false,

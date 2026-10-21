@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.21.0",
-    "@gold-ring/shared": "*",
     "gsap": "^3.15.0",
     "howler": "^2.2.4",
     "three": "^0.186.1",

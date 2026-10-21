@@ -2,7 +2,7 @@
 # The Fastify/WebSocket server must be deployed separately (Render, Fly, Railway, VPS).
 [build]
   command = "npm run build"
-  publish = "dist/client"
+  publish = "client/dist"
 
 [build.environment]
   NODE_VERSION = "22"

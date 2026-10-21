@@ -38,7 +38,7 @@ The client runs fully offline. The server is only needed for leaderboards, daily
 Production build:
 
 ```bash
-npm run build        # static client in dist/client
+npm run build        # static client in client/dist
 npm run start        # Fastify server
 ```
 
@@ -157,8 +157,9 @@ See [TESTING.md](TESTING.md) for the manual cross-browser and performance checkl
 Netlify and Vercel host the **static client only**; the Fastify + WebSocket server must run somewhere
 that supports long-lived connections (Render, Fly.io, Railway, a VPS, or Docker).
 
-- **Client**: `npm run build`, then publish `dist/client`. `netlify.toml` and `vercel.json` are included,
-  with the correct build command, publish directory and SPA fallback.
+- **Client**: `npm run build`, then publish `client/dist`. `netlify.toml`, `vercel.json` and
+  `client/vercel.json` are included. On Vercel, import the **client** as a single project (root `client`,
+  output `dist`); on Netlify, build from the repo root (publish `client/dist`).
 - **Server**: `docker compose up --build`, or deploy `server/Dockerfile` (a `render.yaml` blueprint is
   included). Set `CORS_ORIGIN` to the client origin.
 - **Connect them**: set `VITE_API_URL` (and optionally `VITE_WS_URL`) in Netlify/Vercel before building.
